@@ -35,6 +35,7 @@
 	"type": "module",
 	"dependencies": {
 		"@cloudparker/easy-idb": "^0.0.44",
-		"bootstrap": "^5.3.1"
+		"bootstrap": "^5.3.1",
+		"toastr": "^2.1.4"
 	}
 }

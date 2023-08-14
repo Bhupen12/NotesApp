@@ -3,6 +3,7 @@
 	import type { NoteType } from '$lib/local/local-todo-service';
 	import { notesStore } from '$lib/local/local.db-services';
 	import { get } from 'svelte/store';
+	import { goto } from '$app/navigation';
 
 	let note: NoteType = {};
 	let noteItems: NoteType[] | undefined = [];
@@ -54,26 +55,32 @@
 					<textarea class="form-control" bind:value={newNotes} rows="10" />
 				</div>
 				<div class="row mt-3">
-					<div class="col-3">
+					<div class="col-6">
 						<button class="btn btn-dark" on:click={saveNotes}
-							><i class="fa-solid fa-floppy-disk" /> Save</button
+							><i class="fa-solid fa-floppy-disk fa-xl" />&nbsp Save</button
 						>
 					</div>
-					<div class="col-8" />
-					<div class="col-1">
-						<i class="fa-solid fa-xmark removeTextBox" on:click={addNotes} />
+					<div class="col-4" />
+					<div class="col-2 d-flex justify-content-end">
+						<a on:click={addNotes}><i class="fa-solid fa-xmark fa-2xl removeTextBox" /></a>
 					</div>
 				</div>
 			</div>
 		{:else if noteItems}
+			<div class="col-lg-4 col-md-6 col-sm-12 mb-2 d-flex justify-content-center">
+				<button class="btn btn-lg btnAdd" on:click={addNotes}>
+					<i class="fa-solid fa-circle-plus fa-4x" />
+				</button>
+			</div>
+
 			{#each noteItems as note}
-				<div class="col-6 col-sm-4">
+				<div class="col-lg-4 col-md-6 col-sm-12 mb-2">
 					<div class="row">
 						<div class="col-12">
-							<div class="card mt-2">
+							<div class="card mt-2 pt-3 px-3 bg-light">
 								<div class="card-body">
 									<p class="card-text">
-										{truncateWords(note.note, 30)}
+										{truncateWords(note.note, 20)}
 										<a href="notes/{note._id}">...Read More</a>
 									</p>
 									<hr />
@@ -89,17 +96,17 @@
 		{/if}
 	</div>
 
-	<button class="btn btnAdd" on:click={addNotes}>
+	<!-- <button class="btn btn-lg btnAdd" on:click={addNotes}>
 		<i class="fa-solid fa-circle-plus fa-4x" />
-	</button>
+	</button> -->
 </div>
 
 <style>
 	.btnAdd {
-		position: fixed;
+		/* position: fixed;
 		bottom: 0;
 		right: 0;
-		margin: 2rem 5rem;
+		margin: 2rem 5rem; */
 		color: tomato;
 	}
 
@@ -107,8 +114,29 @@
 		cursor: pointer;
 	}
 
-	.dateModify{
+	.card {
+		text-align: justify;
+		border-radius: 4px;
+		background: #fff;
+		box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
+		transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12), 0.3s box-shadow,
+			0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
+		padding: 14px 80px 18px 36px;
+	}
+
+	.card-text {
+		font-size: 1.1rem;
+		height: 9rem;
+	}
+
+	.card:hover {
+		transform: scale(1.05);
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+	}
+
+	.dateModify {
 		text-align: right;
 		font-size: 0.9rem;
+		height: 0.1rem;
 	}
 </style>
